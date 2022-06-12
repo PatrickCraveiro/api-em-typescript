@@ -1,4 +1,5 @@
-function teste (): number {
-  return 1
-}
-teste()
+describe('', () => {
+  test('', () => {
+    expect(1).toBe(1)
+  })
+})
