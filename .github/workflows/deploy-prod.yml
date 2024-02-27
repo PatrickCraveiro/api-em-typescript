@@ -1,0 +1,47 @@
+on:
+  workflow_dispatch:
+    inputs:
+      area:
+        description: 'Área'
+        required: true
+        type: choice
+        options:
+          - teste1
+          - teste2
+          - teste3
+          - teste4
+
+name: teste deploy
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: self-hosted-win
+
+    steps:
+    - name: 🚚 Obtendo a última versão do código
+      uses: actions/checkout@v3
+
+    - name: 🔥 Usando Node 10
+      uses: actions/setup-node@v3
+      with:
+        node-version: '10.24.1'
+
+    - name: Setando ambiente
+      run: |
+        if (inputs.area -eq 'teste1') {
+          echo "Ambiente=cpmed" >> $GITHUB_ENV
+        }
+        elseif (inputs.area -eq 'teste2') {
+          echo "Ambiente=extensivos2024/inscricoes" >> $GITHUB_ENV
+        }
+        elseif (inputs.area -eq 'teste3') {
+          echo "Ambiente=medMaster" >> $GITHUB_ENV
+        }
+        elseif (inputs.area -eq 'teste4') {
+          echo "Ambiente=Intensivao" >> $GITHUB_ENV
+        }
+        else {
+        Write-Host "Área fornecida inválida: inputs.area"
+        exit 1
+        }
